@@ -1,0 +1,36 @@
+{
+    "python.pythonPath": "env/bin/python",
+    "python.linting.pylintPath": "env/bin/pylint",
+    "python.linting.pylintArgs": [
+        "--load-plugins=pylint_django",
+    ],
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true,
+    "cSpell.words": [
+        "api",
+        "getenv",
+        "key",
+        "omdb",
+        "sqlite"
+    ],
+    "cSpell.ignoreWords": [
+        "b",
+        "bl",
+        "forwarded",
+        "http",
+        "ibe",
+        "imdbid",
+        "imdbrating",
+        "imdbvotes",
+        "l",
+        "m",
+        "p",
+        "proto",
+        "tf",
+        "wtkamgbyd",
+        "x",
+        "ybegf",
+        "yguotpds"
+    ]
+}
