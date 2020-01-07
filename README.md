@@ -25,4 +25,4 @@ The application extends its capabilities by setting up an account, logging in, r
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/casol/) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/casol/MotionPictureDB-API/blob/master/LICENSE.md) file for details
