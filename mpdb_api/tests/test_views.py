@@ -164,20 +164,26 @@ class PostMovieAPITest(APITestCase):
                                     format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED,
                          msg='Correct body, should return status 201')
-
-        respone_put = self.client.put('/api/v1/movies',
-                                      data={'title': 'New_title'},
+        updated_body = self.correct_body
+        updated_body['title'] = 'new title'
+        respone_put = self.client.put('/api/v1/movies/1/',
+                                      data=updated_body,
                                       format='json')
-       # self.assertEqual(respone_put.code, status.HTTP_2
-      # )
-# class CreateUserTest(APITestCase):
-#     def setUp(self):
-#         self.superuser = User.objects.create_superuser('john', 'john@snow.com',
-#                                                        'johnpassword')
-#         self.client.login(username='john', password='johnpassword')
-#         self.data = {'username': 'mike', 'first_name': 'Mike',
-#                      'last_name': 'Tyson'}
+        self.assertEqual(respone_put.status_code, status.HTTP_200_OK,
+                         msg='Update should return status 200')
 
-#     def test_can_create_user(self):
-#         response = self.client.post(reverse('user-list'), self.data)
-#         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+class CreateUserTest(APITestCase):
+
+    def setUp(self):
+        #self.superuser = User.objects.create_superuser('john', 'john@snow.com',
+                                                       #'johnpassword')
+        #self.client.login(username='john', password='johnpassword')
+        self.data = {'username': 'Test', 'email': 'Test@test.com',
+                     'password1': 'qwert', 'password2': 'qwert'}
+
+    def test_can_create_user(self):
+        # todo
+        response = self.client.post('/rest-auth/registration/', data=self.data)
+        print(response)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)

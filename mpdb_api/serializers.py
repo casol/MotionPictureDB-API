@@ -80,3 +80,17 @@ class MovieSerializer(serializers.HyperlinkedModelSerializer):
         for rating_data in ratings_data:
             Rating.objects.create(movie=movie, **rating_data)
         return movie
+
+    def update(self, instance, validated_data):
+        """Updatable nested serializer for movie ratings."""
+        ratings_data = validated_data.pop('ratings')
+        for (key, value) in validated_data.items():
+            setattr(instance, key, value)
+        instance.save()
+        # Update ratings instances that are in the request
+        for rating in instance.ratings.all():
+            for new_rating in ratings_data:
+                if rating.source == new_rating['source']:
+                    rating.value = new_rating['value']
+                    rating.save()
+        return instance
