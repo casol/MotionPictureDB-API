@@ -2,11 +2,11 @@ import requests
 from urllib.parse import urljoin
 
 
-class Client():
+class OMDBClient():
     """API Client for the OMDb API.
 
     An entry point for making request to the OMDb API.
-    Provide methods to search data from tue API endpoints.
+    Provide methods to search data from API endpoints.
     """
 
     API_BASE_URI = 'http://www.omdbapi.com'
@@ -48,7 +48,6 @@ class Client():
         http://www.omdbapi.com/?apikey=[api_key]&t=MovieTitle
         """
         # Character encoding
-        print(search_terms)
         search_terms = '%20'.join(search_terms)
         search_response = self._get('?apikey=', self.API_KEY,
                                     '&t=', search_terms)

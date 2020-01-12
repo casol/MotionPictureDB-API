@@ -12,7 +12,8 @@
         "getenv",
         "key",
         "omdb",
-        "sqlite"
+        "sqlite",
+        "watchlist"
     ],
     "cSpell.ignoreWords": [
         "b",

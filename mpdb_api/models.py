@@ -64,7 +64,7 @@ class Comment(models.Model):
     active = models.BooleanField(default=True)
 
     class Meta:
-        ordering = ('created', )
+        ordering = ['-created']
 
     def __str__(self):
         return f'Comment by {self.user} on {self.movie}'
@@ -82,6 +82,9 @@ class Watchlist(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['-created']
+
     def __str__(self):
         return f'{self.movie}: {self.added}'
 
@@ -97,6 +100,9 @@ class Favorite(models.Model):
     added = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created']
 
     def __str__(self):
         return f'{self.movie}'

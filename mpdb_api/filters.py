@@ -6,7 +6,7 @@ from django.conf import settings
 from rest_framework import filters
 from rest_framework.compat import distinct
 
-from mpdb_api.services import Client
+from mpdb_api.services import OMDBClient
 from mpdb_api.serializers import MovieSerializer
 from mpdb_api.models import Movie
 
@@ -56,18 +56,16 @@ class CustomSearchFilter(filters.SearchFilter):
             # in the resulting queryset.
             # We try to avoid this if possible, for performance reasons.
             queryset = distinct(queryset, base)
-        print(queryset.exists())
         if queryset.exists():
             return queryset
         else:
             # Create client instance
-            client = Client(settings.OMDB_API_KEY)
+            client = OMDBClient(settings.OMDB_API_KEY)
             data = client.search_movie(search_terms)
             serializer_context = {'request': request, }
             serializer = MovieSerializer(data=data, context=serializer_context)
             if serializer.is_valid():
                 movie = serializer.save()
-                # queryset = Movie.objects.filter(title__icontains=search_terms)
                 queryset = Movie.objects.filter(id=movie.id)
                 return queryset
             else:

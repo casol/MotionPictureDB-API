@@ -13,19 +13,21 @@ class MovieModelTest(TestCase):
         movie = Movie.objects.create(
             title="Toy Story", year="1995",
             rated="G", released="22 Nov 1995",
-            runtime="81 min", genre="Animation, Adventure, Comedy, Family, Fantasy",
-            director="John Lasseter", writer="John Lasseter (original story by), Pete Docter (original story by), \
-                Andrew Stanton (original story by), Joe Ranft (original story by),\ Joss Whedon (screenplay by), \
-                Andrew Stanton (screenplay by), Joel Cohen (screenplay by), Alec Sokolow (screenplay by)",
-            actors="Tom Hanks, Tim Allen, Don Rickles, Jim Varney", plot="A cowboy doll is profoundly threatened and \
-                jealous when a new spaceman figure supplants him as top toy in a boy's room.",
-            language="English", country="USA", awards="Nominated for 3 Oscars. Another 23 wins & 17 nominations.",
-            poster="https=//m.media-amazon.com/images/M/MV5BMDU2ZWJlMjktMTRhMy00ZTA5LWEzNDgtYmNmZTEwZTViZWJkXkEyXkFqcGdeQXVyNDQ2OTk4MzI@._V1_SX300.jpg", metascore="95",
-            imdbrating= "8.3", imdbvotes="825,214",
-            imdbid= "tt0114709", type="movie",
-            dvd="20 Mar 2001", boxoffice= "N/A",
-            production= "Buena Vista", website="N/A",
-            created= str(date.today()))
+            runtime="81 min",
+            genre="Animation, Adventure, Comedy, Family, Fantasy",
+            director="John Lasseter",
+            writer="John Lasseter (original story by), Pete Docter",
+            actors="Tom Hanks, Tim Allen, Don Rickles, Jim Varney",
+            plot="A cowboy doll is profoundly threatened and..",
+            language="English", country="USA",
+            awards="Nominated for 3 Oscars. Another 23 wins & 17 nominations.",
+            poster="https=//m.media-amazon.com/images/M/MMzI@._V1_SX300.jpg",
+            metascore="95",
+            imdbrating="8.3", imdbvotes="825,214",
+            imdbid="tt0114709", type="movie",
+            dvd="20 Mar 2001", boxoffice="N/A",
+            production="Buena Vista", website="N/A",
+            created=str(date.today()))
 
     def test_title_label(self):
         movie = Movie.objects.get(id=1)
@@ -272,20 +274,24 @@ class RatingModelTest(TestCase):
         movie = Movie.objects.create(
             title="Toy Story", year="1995",
             rated="G", released="22 Nov 1995",
-            runtime="81 min", genre="Animation, Adventure, Comedy, Family, Fantasy",
-            director="John Lasseter", writer="John Lasseter (original story by), Pete Docter (original story by), \
-                Andrew Stanton (original story by), Joe Ranft (original story by),\ Joss Whedon (screenplay by), \
-                Andrew Stanton (screenplay by), Joel Cohen (screenplay by), Alec Sokolow (screenplay by)",
-            actors="Tom Hanks, Tim Allen, Don Rickles, Jim Varney", plot="A cowboy doll is profoundly threatened and \
-                jealous when a new spaceman figure supplants him as top toy in a boy's room.",
-            language="English", country="USA", awards="Nominated for 3 Oscars. Another 23 wins & 17 nominations.",
-            poster="https=//m.media-amazon.com/images/M/MV5BMDU2ZWJlMjktMTRhMy00ZTA5LWEzNDgtYmNmZTEwZTViZWJkXkEyXkFqcGdeQXVyNDQ2OTk4MzI@._V1_SX300.jpg", metascore="95",
+            runtime="81 min",
+            genre="Animation, Adventure, Comedy, Family, Fantasy",
+            director="John Lasseter",
+            writer="John Lasseter (original story by), Pete Docter",
+            actors="Tom Hanks, Tim Allen, Don Rickles, Jim Varney",
+            plot="A cowboy doll is profoundly threatened and..",
+            language="English", country="USA",
+            awards="Nominated for 3 Oscars. Another 23 wins & 17 nominations.",
+            poster="https=//m.media-amazon.com/images/M/MMzI@._V1_SX300.jpg",
+            metascore="95",
             imdbrating="8.3", imdbvotes="825,214",
             imdbid="tt0114709", type="movie",
             dvd="20 Mar 2001", boxoffice="N/A",
             production="Buena Vista", website="N/A",
             created=str(date.today()))
-        ratings = Rating.objects.create(movie=movie, source='Internet Movie Database', value='8.3/10')
+        ratings = Rating.objects.create(movie=movie,
+                                        source='Internet Movie Database',
+                                        value='8.3/10')
 
     def test_movie_label(self):
         rating = Rating.objects.get(id=1)
@@ -325,29 +331,34 @@ class CommentModelTest(TestCase):
     def setUpTestData(cls):
         """Setup a movie with related comment object."""
         User = get_user_model()
-        user = User.objects.create_user(username='TestNormal', email='normal@user.com', password='foo')
+        user = User.objects.create_user(username='TestNormal',
+                                        email='normal@user.com',
+                                        password='foo')
         movie = Movie.objects.create(
             title="Toy Story", year="1995",
             rated="G", released="22 Nov 1995",
-            runtime="81 min", genre="Animation, Adventure, Comedy, Family, Fantasy",
-            director="John Lasseter", writer="John Lasseter (original story by), Pete Docter (original story by), \
-                Andrew Stanton (original story by), Joe Ranft (original story by),\ Joss Whedon (screenplay by), \
-                Andrew Stanton (screenplay by), Joel Cohen (screenplay by), Alec Sokolow (screenplay by)",
-            actors="Tom Hanks, Tim Allen, Don Rickles, Jim Varney", plot="A cowboy doll is profoundly threatened and \
-                jealous when a new spaceman figure supplants him as top toy in a boy's room.",
-            language="English", country="USA", awards="Nominated for 3 Oscars. Another 23 wins & 17 nominations.",
-            poster="https=//m.media-amazon.com/images/M/MV5BMDU2ZWJlMjktMTRhMy00ZTA5LWEzNDgtYmNmZTEwZTViZWJkXkEyXkFqcGdeQXVyNDQ2OTk4MzI@._V1_SX300.jpg", metascore="95",
+            runtime="81 min",
+            genre="Animation, Adventure, Comedy, Family, Fantasy",
+            director="John Lasseter",
+            writer="John Lasseter (original story by), Pete Docter",
+            actors="Tom Hanks, Tim Allen, Don Rickles, Jim Varney",
+            plot="A cowboy doll is profoundly threatened and..",
+            language="English", country="USA",
+            awards="Nominated for 3 Oscars. Another 23 wins & 17 nominations.",
+            poster="https=//m.media-amazon.com/images/M/MMzI@._V1_SX300.jpg",
+            metascore="95",
             imdbrating="8.3", imdbvotes="825,214",
             imdbid="tt0114709", type="movie",
-            dvd="20 Mar 2001", boxoffice= "N/A",
+            dvd="20 Mar 2001", boxoffice="N/A",
             production="Buena Vista", website="N/A",
             created=str(date.today()))
         ratings = Rating.objects.create(
             movie=movie, source='Internet Movie Database', value='8.3/10')
         # Create 4 comment objects
-        for comment_id in range(1,5):
+        for comment_id in range(1, 5):
             comment = Comment.objects.create(
-                user=user, movie=movie, body=f'a movie comment nr:{comment_id}',
+                user=user, movie=movie,
+                body=f'a movie comment nr:{comment_id}',
                 created=date.today(), active=True)
 
     def test_movie_label(self):
@@ -393,25 +404,31 @@ class WatchlistModelTest(TestCase):
     def setUpTestData(cls):
         """Setup a movie and user with for a watchlist."""
         User = get_user_model()
-        user = User.objects.create_user(username='TestNormal', email='normal@user.com', password='foo')
+        user = User.objects.create_user(username='TestNormal',
+                                        email='normal@user.com',
+                                        password='foo')
         movie = Movie.objects.create(
             title="Toy Story", year="1995",
             rated="G", released="22 Nov 1995",
-            runtime="81 min", genre="Animation, Adventure, Comedy, Family, Fantasy",
-            director="John Lasseter", writer="John Lasseter (original story by), Pete Docter (original story by), \
-                Andrew Stanton (original story by), Joe Ranft (original story by),\ Joss Whedon (screenplay by), \
-                Andrew Stanton (screenplay by), Joel Cohen (screenplay by), Alec Sokolow (screenplay by)",
-            actors="Tom Hanks, Tim Allen, Don Rickles, Jim Varney", plot="A cowboy doll is profoundly threatened and \
-                jealous when a new spaceman figure supplants him as top toy in a boy's room.",
-            language="English", country="USA", awards="Nominated for 3 Oscars. Another 23 wins & 17 nominations.",
-            poster="https=//m.media-amazon.com/images/M/MV5BMDU2ZWJlMjktMTRhMy00ZTA5LWEzNDgtYmNmZTEwZTViZWJkXkEyXkFqcGdeQXVyNDQ2OTk4MzI@._V1_SX300.jpg", metascore="95",
-            imdbrating= "8.3", imdbvotes="825,214",
-            imdbid= "tt0114709", type="movie",
-            dvd="20 Mar 2001", boxoffice= "N/A",
-            production= "Buena Vista", website="N/A",
-            created= str(date.today()))
-
-        watchlist = Watchlist.objects.create(user=user, movie=movie, added=True, created= str(date.today()))
+            runtime="81 min",
+            genre="Animation, Adventure, Comedy, Family, Fantasy",
+            director="John Lasseter",
+            writer="John Lasseter (original story by), Pete Docter",
+            actors="Tom Hanks, Tim Allen, Don Rickles, Jim Varney",
+            plot="A cowboy doll is profoundly threatened and..",
+            language="English", country="USA",
+            awards="Nominated for 3 Oscars. Another 23 wins & 17 nominations.",
+            poster="https=//m.media-amazon.com/images/M/MMzI@._V1_SX300.jpg",
+            metascore="95",
+            imdbrating="8.3", imdbvotes="825,214",
+            imdbid="tt0114709", type="movie",
+            dvd="20 Mar 2001", boxoffice="N/A",
+            production="Buena Vista", website="N/A",
+            created=str(date.today()))
+        watchlist = Watchlist.objects.create(user=user,
+                                             movie=movie,
+                                             added=True,
+                                             created=str(date.today()))
 
     def test_movie_label(self):
         watchlist = Watchlist.objects.get(id=1)
@@ -457,21 +474,24 @@ class FavoriteModelTest(TestCase):
         movie = Movie.objects.create(
             title="Toy Story", year="1995",
             rated="G", released="22 Nov 1995",
-            runtime="81 min", genre="Animation, Adventure, Comedy, Family, Fantasy",
-            director="John Lasseter", writer="John Lasseter (original story by), Pete Docter (original story by), \
-                Andrew Stanton (original story by), Joe Ranft (original story by),\ Joss Whedon (screenplay by), \
-                Andrew Stanton (screenplay by), Joel Cohen (screenplay by), Alec Sokolow (screenplay by)",
-            actors="Tom Hanks, Tim Allen, Don Rickles, Jim Varney", plot="A cowboy doll is profoundly threatened and \
-                jealous when a new spaceman figure supplants him as top toy in a boy's room.",
-            language="English", country="USA", awards="Nominated for 3 Oscars. Another 23 wins & 17 nominations.",
-            poster="https=//m.media-amazon.com/images/M/MV5BMDU2ZWJlMjktMTRhMy00ZTA5LWEzNDgtYmNmZTEwZTViZWJkXkEyXkFqcGdeQXVyNDQ2OTk4MzI@._V1_SX300.jpg", metascore="95",
-            imdbrating= "8.3", imdbvotes="825,214",
-            imdbid= "tt0114709", type="movie",
-            dvd="20 Mar 2001", boxoffice= "N/A",
-            production= "Buena Vista", website="N/A",
-            created= str(date.today()))
-
-        favorite = Favorite.objects.create(user=user, movie=movie, added=True, created= str(date.today()))
+            runtime="81 min",
+            genre="Animation, Adventure, Comedy, Family, Fantasy",
+            director="John Lasseter",
+            writer="John Lasseter (original story by), Pete Docter",
+            actors="Tom Hanks, Tim Allen, Don Rickles, Jim Varney",
+            plot="A cowboy doll is profoundly threatened and..",
+            language="English", country="USA",
+            awards="Nominated for 3 Oscars. Another 23 wins & 17 nominations.",
+            poster="https=//m.media-amazon.com/images/M/MMzI@._V1_SX300.jpg",
+            metascore="95",
+            imdbrating="8.3", imdbvotes="825,214",
+            imdbid="tt0114709", type="movie",
+            dvd="20 Mar 2001", boxoffice="N/A",
+            production="Buena Vista", website="N/A",
+            created=str(date.today()))
+        favorite = Favorite.objects.create(user=user, movie=movie,
+                                           added=True,
+                                           created=str(date.today()))
 
     def test_movie_label(self):
         favorite = Favorite.objects.get(id=1)

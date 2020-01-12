@@ -95,6 +95,13 @@ class CommentViewSet(viewsets.ModelViewSet):
         permissions.IsAuthenticatedOrReadOnly,
         IsOwnerOrReadOnly, )
 
+    def get_queryset(self):
+        """
+        This view should return a list of all the
+        active comments.
+        """
+        return Comment.objects.filter(active=True)
+
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
@@ -110,6 +117,7 @@ class CustomUserViewSet(viewsets.ReadOnlyModelViewSet):
     """
 
     queryset = CustomUser.objects.all()
+    permissions = (permissions.IsAdminUser)
     lookup_field = 'username'
     serializer_class = CustomUserSerializer
 
