@@ -11,7 +11,7 @@ The application extends its capabilities by setting up an account, logging in, r
 ## API Guide 
 **Routers** /api/v1/
 
-Registration /rest-auth/registration/
+**Registration** /rest-auth/registration/
  
 **Login**
 /rest-auth/login/
@@ -66,12 +66,15 @@ Create a new comment instance (authenticated only).
 Return a list of all favorite movies for authenticated user. 
 
 **POST** /api/v1/favorite/
+
 Add to favorite (authenticated only).
 
 **GET** /api/v1/watchlist/
+
 Return a list of all movies in the watchlist for authenticated user.
 
 **POST** /api/v1/watchlist/
+
 Add to watchlist.
 
 ## Built With
