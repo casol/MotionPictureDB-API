@@ -1,6 +1,7 @@
 from datetime import date
 from django.test import TestCase
-from mpdb_api.models import Movie, Comment, Rating, Watchlist, Favorite
+from mpdb_api.models import (Movie, Comment, Rating,
+                             Watchlist, Favorite, UserRating)
 from django.contrib.auth import get_user_model
 
 
@@ -10,7 +11,7 @@ class MovieModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         """Setup a movie with related objects."""
-        movie = Movie.objects.create(
+        Movie.objects.create(
             title="Toy Story", year="1995",
             rated="G", released="22 Nov 1995",
             runtime="81 min",
@@ -289,9 +290,9 @@ class RatingModelTest(TestCase):
             dvd="20 Mar 2001", boxoffice="N/A",
             production="Buena Vista", website="N/A",
             created=str(date.today()))
-        ratings = Rating.objects.create(movie=movie,
-                                        source='Internet Movie Database',
-                                        value='8.3/10')
+        Rating.objects.create(movie=movie,
+                              source='Internet Movie Database',
+                              value='8.3/10')
 
     def test_movie_label(self):
         rating = Rating.objects.get(id=1)
@@ -352,11 +353,11 @@ class CommentModelTest(TestCase):
             dvd="20 Mar 2001", boxoffice="N/A",
             production="Buena Vista", website="N/A",
             created=str(date.today()))
-        ratings = Rating.objects.create(
+        Rating.objects.create(
             movie=movie, source='Internet Movie Database', value='8.3/10')
         # Create 4 comment objects
         for comment_id in range(1, 5):
-            comment = Comment.objects.create(
+            Comment.objects.create(
                 user=user, movie=movie,
                 body=f'a movie comment nr:{comment_id}',
                 created=date.today(), active=True)
@@ -425,10 +426,10 @@ class WatchlistModelTest(TestCase):
             dvd="20 Mar 2001", boxoffice="N/A",
             production="Buena Vista", website="N/A",
             created=str(date.today()))
-        watchlist = Watchlist.objects.create(user=user,
-                                             movie=movie,
-                                             added=True,
-                                             created=str(date.today()))
+        Watchlist.objects.create(user=user,
+                                 movie=movie,
+                                 added=True,
+                                 created=str(date.today()))
 
     def test_movie_label(self):
         watchlist = Watchlist.objects.get(id=1)
@@ -466,7 +467,7 @@ class FavoriteModelTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        """Setup a movie and user with for a watchlist."""
+        """Setup a movie and user with favorite."""
         User = get_user_model()
         user = User.objects.create_user(username='TestNormal',
                                         email='normal@user.com',
@@ -489,9 +490,8 @@ class FavoriteModelTest(TestCase):
             dvd="20 Mar 2001", boxoffice="N/A",
             production="Buena Vista", website="N/A",
             created=str(date.today()))
-        favorite = Favorite.objects.create(user=user, movie=movie,
-                                           added=True,
-                                           created=str(date.today()))
+        Favorite.objects.create(user=user, movie=movie,
+                                added=True, created=str(date.today()))
 
     def test_movie_label(self):
         favorite = Favorite.objects.get(id=1)
@@ -522,3 +522,55 @@ class FavoriteModelTest(TestCase):
         favorite = Favorite.objects.get(id=1)
         expected_name = f'{favorite.movie}'
         self.assertEqual(expected_name, str(favorite))
+
+
+class UserRatingModelTest(TestCase):
+    """Test user rating model."""
+
+    @classmethod
+    def setUpTestData(cls):
+        """Setup a movie and user rating."""
+        User = get_user_model()
+        user = User.objects.create_user(username='TestNormal',
+                                        email='normal@user.com',
+                                        password='foo')
+        movie = Movie.objects.create(
+            title="Toy Story", year="1995",
+            rated="G", released="22 Nov 1995",
+            runtime="81 min",
+            genre="Animation, Adventure, Comedy, Family, Fantasy",
+            director="John Lasseter",
+            writer="John Lasseter (original story by), Pete Docter",
+            actors="Tom Hanks, Tim Allen, Don Rickles, Jim Varney",
+            plot="A cowboy doll is profoundly threatened and..",
+            language="English", country="USA",
+            awards="Nominated for 3 Oscars. Another 23 wins & 17 nominations.",
+            poster="https=//m.media-amazon.com/images/M/MMzI@._V1_SX300.jpg",
+            metascore="95",
+            imdbrating="8.3", imdbvotes="825,214",
+            imdbid="tt0114709", type="movie",
+            dvd="20 Mar 2001", boxoffice="N/A",
+            production="Buena Vista", website="N/A",
+            created=str(date.today()))
+        UserRating.objects.create(user=user, movie=movie,
+                                  rate=4, created=str(date.today()))
+
+    def test_movie_label(self):
+        user_rating = UserRating.objects.get(id=1)
+        field_label = user_rating._meta.get_field('movie').verbose_name
+        self.assertEqual(field_label, 'movie')
+
+    def test_user_label(self):
+        user_rating = UserRating.objects.get(id=1)
+        field_label = user_rating._meta.get_field('user').verbose_name
+        self.assertEqual(field_label, 'user')
+
+    def test_rate_label(self):
+        user_rating = UserRating.objects.get(id=1)
+        field_label = user_rating._meta.get_field('rate').verbose_name
+        self.assertEqual(field_label, 'rate')
+
+    def test_object_name_is_movie_colon_rate(self):
+        user_rating = UserRating.objects.get(id=1)
+        expected_name = f'{user_rating.movie}: {user_rating.rate}'
+        self.assertEqual(expected_name, str(user_rating))

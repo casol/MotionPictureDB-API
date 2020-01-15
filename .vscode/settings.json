@@ -9,10 +9,12 @@
     "python.linting.enabled": true,
     "cSpell.words": [
         "api",
+        "buena",
         "getenv",
         "key",
         "omdb",
         "sqlite",
+        "varney",
         "watchlist"
     ],
     "cSpell.ignoreWords": [

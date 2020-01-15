@@ -2,10 +2,10 @@ from rest_framework import permissions, viewsets
 
 from mpdb_api.filters import CustomSearchFilter
 from users.models import CustomUser
-from mpdb_api.models import Comment, Movie, Watchlist, Favorite
+from mpdb_api.models import Comment, Movie, Watchlist, Favorite, UserRating
 from mpdb_api.permissions import IsOwnerOrReadOnly, IsAdminOrReadOnly
 from mpdb_api.serializers import (
-    CommentSerializer, CustomUserSerializer,
+    CommentSerializer, CustomUserSerializer, UserRatingSerializer,
     MovieSerializer, WatchlistSerializer, FavoriteSerializer)
 
 
@@ -69,6 +69,38 @@ class WatchlistViewSet(viewsets.ModelViewSet):
         """
         user = self.request.user
         return Watchlist.objects.filter(user=user.id, added=True)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+class UserRatingViewSet(viewsets.ModelViewSet):
+    """
+    list:
+    Return a list of all rated movies.
+
+    retrieve:
+    Return a given rating.
+
+    create:
+    Rate a movie.
+
+    update:
+    Update rating.
+    """
+
+    serializer_class = UserRatingSerializer
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        IsOwnerOrReadOnly, )
+
+    def get_queryset(self):
+        """
+        This view should return a list of all rated movies
+        for the currently authenticated user.
+        """
+        user = self.request.user
+        return UserRating.objects.filter(user=user.id)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

@@ -1,5 +1,20 @@
 from django.contrib import admin
-from mpdb_api.models import Comment, Movie, Watchlist, Rating
+from mpdb_api.models import (Comment, Movie, Watchlist,
+                             Rating, Favorite, UserRating)
+
+
+class UserRatingAdmin(admin.ModelAdmin):
+    list_display = ('user', 'movie', 'rate')
+
+
+admin.site.register(UserRating, UserRatingAdmin)
+
+
+class FavoriteAdmin(admin.ModelAdmin):
+    list_display = ('user', 'movie', 'added')
+
+
+admin.site.register(Favorite, FavoriteAdmin)
 
 
 class WatchlistAdmin(admin.ModelAdmin):

@@ -9,6 +9,7 @@ router.register(r'movies', views.MovieViewSet)
 router.register(r'comments', views.CommentViewSet)
 router.register(r'watchlist', views.WatchlistViewSet, basename='watchlist')
 router.register(r'favorite', views.FavoriteViewSet, basename='favorite')
+router.register(r'rating', views.UserRatingViewSet, basename='userrating')
 router.register(r'users', views.CustomUserViewSet)
 # The API URLs are determined automatically by the router.
 # Additionally, we include the login URLs for the browsable API.

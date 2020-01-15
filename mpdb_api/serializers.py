@@ -1,7 +1,18 @@
 from rest_framework import serializers
-
+from rest_framework.reverse import reverse
 from users.models import CustomUser
-from mpdb_api.models import Movie, Comment, Watchlist, Rating, Favorite
+from mpdb_api.models import (Movie, Comment, Watchlist,
+                             Rating, Favorite, UserRating)
+
+
+class UserRatingSerializer(serializers.HyperlinkedModelSerializer):
+    """Serializer for a user movie rating."""
+
+    user = serializers.ReadOnlyField(source='user.username')
+
+    class Meta:
+        model = UserRating
+        fields = ('movie', 'rate', 'user', 'url')
 
 
 class FavoriteSerializer(serializers.HyperlinkedModelSerializer):
@@ -43,15 +54,32 @@ class CustomUserSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name='customuser-detail', lookup_field='username')
 
-    watchlist = serializers.HyperlinkedRelatedField(
-        many=True, view_name='movie-detail', read_only=True)
+    user_ratings = serializers.HyperlinkedRelatedField(
+        many=True, view_name='userrating-detail', read_only=True)
 
-    favorites = serializers.HyperlinkedRelatedField(
-        many=True, view_name='movie-detail', read_only=True)
+    watchlist = serializers.SerializerMethodField()
+
+    favorites = serializers.SerializerMethodField()
+
+    def get_watchlist(self, obj):
+        watchlist_movie_urls = [
+            reverse("movie-detail", args=[movie.movie.id],
+                    request=self.context['request'])
+            for movie in obj.watchlist.all()
+        ]
+        return watchlist_movie_urls
+
+    def get_favorites(self, obj):
+        favorite_movie_urls = [
+            reverse("movie-detail", args=[movie.movie.id],
+                    request=self.context['request'])
+            for movie in obj.favorites.all()
+        ]
+        return favorite_movie_urls
 
     class Meta:
         model = CustomUser
-        fields = ('url', 'id', 'username',
+        fields = ('url', 'username', 'user_ratings',
                   'comments', 'watchlist', 'favorites')
 
 

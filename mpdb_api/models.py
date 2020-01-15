@@ -106,3 +106,29 @@ class Favorite(models.Model):
 
     def __str__(self):
         return f'{self.movie}'
+
+
+class UserRating(models.Model):
+    """Stores a user rating."""
+
+    Rating_CHOICES = [
+        (1, 'Poor'),
+        (2, 'Average'),
+        (3, 'Good'),
+        (4, 'Very Good'),
+        (5, 'Excellent')
+    ]
+    movie = models.ForeignKey(Movie, related_name="user_ratings",
+                              on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             related_name="user_ratings",
+                             on_delete=models.CASCADE)
+    rate = models.IntegerField(choices=Rating_CHOICES)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created']
+
+    def __str__(self):
+        return f'{self.movie}: {self.rate}'
