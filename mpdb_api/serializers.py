@@ -88,7 +88,7 @@ class RatingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Rating
-        fields = ("source", "value")
+        fields = ('source', 'value')
 
 
 class MovieSerializer(serializers.HyperlinkedModelSerializer):
