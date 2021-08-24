@@ -8,7 +8,7 @@ Django==2.2.9
 django-allauth==0.41.0
 django-filter==2.2.0
 django-rest-auth==0.9.5
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 entrypoints==0.3
 flake8==3.7.9
 idna==2.8
