@@ -1,0 +1,56 @@
+version: '2.4'
+
+services:
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: test
+
+  release:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DJANGO_SETTINGS_MODULE: motion_picture_db.settings_release
+      OMDB_API_KEY: <YOUR_KEY>
+      MYSQL_HOST: db
+      MYSQL_USER: motion
+      MYSQL_PASSWORD: password
+
+  app:
+    extends:
+      service: release
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+     - 8000:8000
+    command:
+      - uwsgi
+      - --http=0.0.0.0:8000
+      - --module=motion_picture_db.wsgi
+      - --master
+  migrate:
+    extends:
+      service: release
+    depends_on:
+      db:
+        condition: service_healthy
+    command:
+      - python3
+      - manage.py
+      - migrate
+      - --no-input
+
+  db:
+    image: mysql:5.7
+    healthcheck:
+      test: mysqlshow -u $$MYSQL_USER -p$$MYSQL_PASSWORD
+      interval: 3s
+      retries: 10
+    environment:
+      MYSQL_DATABASE: motion_picture_db
+      MYSQL_USER: motion
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
