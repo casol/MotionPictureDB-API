@@ -14,8 +14,8 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 DATABASES = {
     'default': {
         'ENGINE': 'mysql.connector.django',
-        'NAME': os.environ.get('MYSQL_DATABASE', 'todobackend'),
-        'USER': os.environ.get('MYSQL_USER', 'todo'),
+        'NAME': os.environ.get('MYSQL_DATABASE', 'motion_picture_db'),
+        'USER': os.environ.get('MYSQL_USER', 'motion'),
         'PASSWORD': os.environ.get('MYSQL_PASSWORD', 'password'),
         'HOST': os.environ.get('MYSQL_HOST', 'localhost'),
         'PORT': os.environ.get('MYSQL_PORT', '3306'),
