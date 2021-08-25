@@ -80,8 +80,22 @@ Get an API key --> http://www.omdbapi.com/
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-### Installing (Linux)
+### Installing (Docker or Linux locally)
 
+Docker:
+
+Download or "git clone" the package:
+```
+$ git clone https://github.com/casol/MotionPictureDB-API
+$ cd MotionPictureDB-API
+```
+Setup OMDB_API_KEY in the docker-compose file and run docker-compose:
+```
+$ docker-compose build
+$ docker-compose up migrate
+$ docker-compose run app python3 manage.py collectstatic --no-input
+$ docker-compose up app
+```
 Try it locally:
 
 Download or "git clone" the package:
@@ -94,6 +108,7 @@ First install the module, preferably in a virtual environment:
 $ python3 -m venv env
 # activate virtual environment
 $ source env/bin/activate
+$ cd src
 (env) $ pip install -r requirements.txt
 ```
 Initiate the migration and then migrate the database:
